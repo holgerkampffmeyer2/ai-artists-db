@@ -1,0 +1,68 @@
+name: Validate AI Artists Database
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install jsonschema
+        run: pip install jsonschema
+
+      - name: Validate known_ai_artists.json against schema.json
+        run: python -m jsonschema -i known_ai_artists.json schema.json
+
+      - name: Check for duplicate IDs
+        run: |
+          python3 -c "
+          import json
+          with open('known_ai_artists.json') as f:
+              data = json.load(f)
+          ids = [e['id'] for e in data['entries']]
+          dupes = [x for x in ids if ids.count(x) > 1]
+          if dupes:
+              print(f'DUPLICATE IDs: {dupes}')
+              exit(1)
+          print('No duplicate IDs')
+          "
+
+      - name: Verify evidence URLs are valid format
+        run: |
+          python3 -c "
+          import json, re
+          with open('known_ai_artists.json') as f:
+              data = json.load(f)
+          url_pattern = re.compile(r'^https?://')
+          for entry in data['entries']:
+              for ev in entry['evidence']:
+                  if not url_pattern.match(ev['url']):
+                      print(f'Invalid URL in {entry[\"id\"]}: {ev[\"url\"]}')
+                      exit(1)
+          print('All evidence URLs valid format')
+          "
+
+      - name: Verify dates are ISO format
+        run: |
+          python3 -c "
+          import json, re
+          from datetime import datetime
+          with open('known_ai_artists.json') as f:
+              data = json.load(f)
+          date_pattern = re.compile(r'^\\d{4}-\\d{2}-\\d{2}$')
+          for entry in data['entries']:
+              for field in ['added', 'verified']:
+                  if not date_pattern.match(entry[field]):
+                      print(f'Invalid {field} date in {entry[\"id\"]}: {entry[field]}')
+                      exit(1)
+              for ev in entry['evidence']:
+                  if not re.match(r'^\\d{4}-\\d{2}$', ev['date']):
+                      print(f'Invalid evidence date in {entry[\"id\"]}: {ev[\"date\"]}')
+                      exit(1)
+          print('All dates valid ISO format')
+          "
