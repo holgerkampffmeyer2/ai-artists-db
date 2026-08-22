@@ -14,12 +14,16 @@
         {
           "url": "https://pro.music-worx.com/release/freedom-balearic-vibes",
           "note": "Music Worx editorial: 'Likely AI-assisted based on label-level evaluation and release patterns'",
-          "date": "2026-07"
+          "date": "2026-07",
+          "last_checked": "2026-08-22",
+          "status": "valid"
         },
         {
           "url": "https://www.beatport.com/release/freedom/6972369",
           "note": "Beatport release June 2026; artist has no prior discography, 21 Instagram followers",
-          "date": "2026-06"
+          "date": "2026-06",
+          "last_checked": "2026-08-22",
+          "status": "valid"
         }
       ],
       "added": "2026-08-22",
@@ -36,7 +40,9 @@
         {
           "url": "https://www.theverge.com/2024/1/10/24033132/spotify-ai-generated-music-detection-flag",
           "note": "The Verge investigation: AI-generated band with Spotify profiles, millions of streams",
-          "date": "2024-01"
+          "date": "2024-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
         }
       ],
       "added": "2026-08-22",
@@ -53,7 +59,9 @@
         {
           "url": "https://www.theverge.com/2023/11/10/23952124/anna-indiana-ai-singer-songwriter",
           "note": "Fully AI-generated singer (music, lyrics, voice, visuals) - creator admitted AI origin",
-          "date": "2023-11"
+          "date": "2023-11",
+          "last_checked": "2026-08-22",
+          "status": "valid"
         }
       ],
       "added": "2026-08-22",
@@ -70,7 +78,9 @@
         {
           "url": "https://www.aiva.ai/",
           "note": "Official AI composer platform - explicitly markets as AI-generated music",
-          "date": "2023-01"
+          "date": "2023-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
         }
       ],
       "added": "2026-08-22",
@@ -87,7 +97,9 @@
         {
           "url": "https://soundraw.io/",
           "note": "AI music generator platform - explicitly markets as AI-generated royalty-free music",
-          "date": "2023-01"
+          "date": "2023-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
         }
       ],
       "added": "2026-08-22",
@@ -104,7 +116,9 @@
         {
           "url": "https://boomy.com/",
           "note": "AI music creation platform - explicitly markets as AI-generated music",
-          "date": "2023-01"
+          "date": "2023-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
         }
       ],
       "added": "2026-08-22",
@@ -121,7 +135,9 @@
         {
           "url": "https://mubert.com/",
           "note": "AI generative music platform - explicitly markets as AI-generated streaming music",
-          "date": "2023-01"
+          "date": "2023-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
         }
       ],
       "added": "2026-08-22",
