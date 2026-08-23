@@ -1,0 +1,6 @@
+# Default: only repo owner can review and merge PRs
+* @holgerkampffmeyer2
+
+# DB file requires owner approval
+known_ai_artists.json @holgerkampffmeyer2
+schema.json @holgerkampffmeyer2
