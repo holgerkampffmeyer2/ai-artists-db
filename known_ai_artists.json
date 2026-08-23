@@ -1,8 +1,88 @@
 {
   "schema_version": "1.0.0",
-  "updated": "2026-08-22",
+  "updated": "2026-08-23",
   "license": "CC0-1.0",
   "entries": [
+    {
+      "id": "aiva",
+      "name": "AIVA",
+      "aliases": [
+        "AIVA Technologies"
+      ],
+      "type": "project",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.aiva.ai/",
+          "note": "Official AI composer platform - explicitly markets as AI-generated music",
+          "date": "2023-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-22",
+      "verified": "2026-08-22"
+    },
+    {
+      "id": "anna-indiana",
+      "name": "Anna Indiana",
+      "aliases": [
+        "@annaindianaai"
+      ],
+      "type": "artist",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.theverge.com/2023/11/10/23952124/anna-indiana-ai-singer-songwriter",
+          "note": "Fully AI-generated singer (music, lyrics, voice, visuals) - creator admitted AI origin",
+          "date": "2023-11",
+          "last_checked": "2026-08-22",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-22",
+      "verified": "2026-08-22"
+    },
+    {
+      "id": "boomy",
+      "name": "Boomy",
+      "aliases": [],
+      "type": "project",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://boomy.com/",
+          "note": "AI music creation platform - explicitly markets as AI-generated music",
+          "date": "2023-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-22",
+      "verified": "2026-08-22"
+    },
+    {
+      "id": "breaking-rust",
+      "name": "Breaking Rust",
+      "aliases": [],
+      "type": "artist",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Artificial_intelligence_in_music",
+          "note": "AI-generated song 'Walk My Walk' topped Billboard Country Digital Song Sales",
+          "date": "2025-11",
+          "last_checked": "2026-08-22",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-22",
+      "verified": "2026-08-22"
+    },
     {
       "id": "clmx",
       "name": "CLMX",
@@ -35,17 +115,36 @@
       "verified": "2026-08-22"
     },
     {
-      "id": "the-velvet-sundown",
-      "name": "The Velvet Sundown",
+      "id": "emily-howell",
+      "name": "Emily Howell",
+      "aliases": [],
+      "type": "project",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Emily_Howell",
+          "note": "AI composer system that emulates Bach style",
+          "date": "1997-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-22",
+      "verified": "2026-08-22"
+    },
+    {
+      "id": "imoliver",
+      "name": "imoliver",
       "aliases": [],
       "type": "artist",
       "labels": [],
       "ai_confidence": "high",
       "evidence": [
         {
-          "url": "https://www.theverge.com/2024/1/10/24033132/spotify-ai-generated-music-detection-flag",
-          "note": "The Verge investigation: AI-generated band with Spotify profiles, millions of streams",
-          "date": "2024-01",
+          "url": "https://www.billboard.com/pro/ai-music-creator-imoliver-record-deal-hallwood/",
+          "note": "AI music designer signed to Hallwood, first traditional label signing of AI creator",
+          "date": "2025-07",
           "last_checked": "2026-08-22",
           "status": "valid"
         }
@@ -54,78 +153,17 @@
       "verified": "2026-08-22"
     },
     {
-      "id": "anna-indiana",
-      "name": "Anna Indiana",
-      "aliases": [
-        "@annaindianaai"
-      ],
-      "type": "artist",
-      "labels": [],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://www.theverge.com/2023/11/10/23952124/anna-indiana-ai-singer-songwriter",
-          "note": "Fully AI-generated singer (music, lyrics, voice, visuals) - creator admitted AI origin",
-          "date": "2023-11",
-          "last_checked": "2026-08-22",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-22",
-      "verified": "2026-08-22"
-    },
-    {
-      "id": "aiva",
-      "name": "AIVA",
-      "aliases": [
-        "AIVA Technologies"
-      ],
-      "type": "project",
-      "labels": [],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://www.aiva.ai/",
-          "note": "Official AI composer platform - explicitly markets as AI-generated music",
-          "date": "2023-01",
-          "last_checked": "2026-08-22",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-22",
-      "verified": "2026-08-22"
-    },
-    {
-      "id": "soundraw",
-      "name": "Soundraw",
+      "id": "jukedeck",
+      "name": "Jukedeck",
       "aliases": [],
       "type": "project",
       "labels": [],
       "ai_confidence": "high",
       "evidence": [
         {
-          "url": "https://soundraw.io/",
-          "note": "AI music generator platform - explicitly markets as AI-generated royalty-free music",
-          "date": "2023-01",
-          "last_checked": "2026-08-22",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-22",
-      "verified": "2026-08-22"
-    },
-    {
-      "id": "boomy",
-      "name": "Boomy",
-      "aliases": [],
-      "type": "project",
-      "labels": [],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://boomy.com/",
-          "note": "AI music creation platform - explicitly markets as AI-generated music",
-          "date": "2023-01",
+          "url": "https://en.wikipedia.org/wiki/Jukedeck",
+          "note": "AI royalty-free music generation acquired by ByteDance",
+          "date": "2019-01",
           "last_checked": "2026-08-22",
           "status": "valid"
         }
@@ -153,17 +191,17 @@
       "verified": "2026-08-22"
     },
     {
-      "id": "suno",
-      "name": "Suno",
+      "id": "musiclm",
+      "name": "MusicLM",
       "aliases": [],
       "type": "project",
       "labels": [],
       "ai_confidence": "high",
       "evidence": [
         {
-          "url": "https://en.wikipedia.org/wiki/Suno_(platform)",
-          "note": "Generative AI music creation platform, launched Dec 2023",
-          "date": "2023-12",
+          "url": "https://en.wikipedia.org/wiki/MusicLM",
+          "note": "Google text-to-music model, research prototype",
+          "date": "2023-01",
           "last_checked": "2026-08-22",
           "status": "valid"
         }
@@ -172,17 +210,59 @@
       "verified": "2026-08-22"
     },
     {
-      "id": "udio",
-      "name": "Udio",
+      "id": "new-artist",
+      "name": "New AI Artist",
+      "aliases": [
+        "_No response_"
+      ],
+      "type": "artist",
+      "labels": [
+        "_No response_"
+      ],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://holger-kampffmeyer.de",
+          "note": "Fake AI",
+          "date": "2028-08",
+          "last_checked": "2026-08-23",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-23",
+      "verified": "2026-08-23"
+    },
+    {
+      "id": "riffusion",
+      "name": "Riffusion",
       "aliases": [],
       "type": "project",
       "labels": [],
       "ai_confidence": "high",
       "evidence": [
         {
-          "url": "https://en.wikipedia.org/wiki/Udio",
-          "note": "AI music generation platform, launched Apr 2024",
-          "date": "2024-04",
+          "url": "https://en.wikipedia.org/wiki/Riffusion",
+          "note": "Neural network generating music via spectrogram diffusion",
+          "date": "2022-12",
+          "last_checked": "2026-08-22",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-22",
+      "verified": "2026-08-22"
+    },
+    {
+      "id": "soundraw",
+      "name": "Soundraw",
+      "aliases": [],
+      "type": "project",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://soundraw.io/",
+          "note": "AI music generator platform - explicitly markets as AI-generated royalty-free music",
+          "date": "2023-01",
           "last_checked": "2026-08-22",
           "status": "valid"
         }
@@ -212,17 +292,55 @@
       "verified": "2026-08-22"
     },
     {
-      "id": "jukedeck",
-      "name": "Jukedeck",
+      "id": "suno",
+      "name": "Suno",
       "aliases": [],
       "type": "project",
       "labels": [],
       "ai_confidence": "high",
       "evidence": [
         {
-          "url": "https://en.wikipedia.org/wiki/Jukedeck",
-          "note": "AI royalty-free music generation acquired by ByteDance",
-          "date": "2019-01",
+          "url": "https://en.wikipedia.org/wiki/Suno_(platform)",
+          "note": "Generative AI music creation platform, launched Dec 2023",
+          "date": "2023-12",
+          "last_checked": "2026-08-22",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-22",
+      "verified": "2026-08-22"
+    },
+    {
+      "id": "the-velvet-sundown",
+      "name": "The Velvet Sundown",
+      "aliases": [],
+      "type": "artist",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://www.theverge.com/2024/1/10/24033132/spotify-ai-generated-music-detection-flag",
+          "note": "The Verge investigation: AI-generated band with Spotify profiles, millions of streams",
+          "date": "2024-01",
+          "last_checked": "2026-08-22",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-22",
+      "verified": "2026-08-22"
+    },
+    {
+      "id": "udio",
+      "name": "Udio",
+      "aliases": [],
+      "type": "project",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://en.wikipedia.org/wiki/Udio",
+          "note": "AI music generation platform, launched Apr 2024",
+          "date": "2024-04",
           "last_checked": "2026-08-22",
           "status": "valid"
         }
@@ -242,101 +360,6 @@
           "url": "https://www.billboard.com/pro/ai-music-artist-xania-monet-multimillion-dollar-record-deal/",
           "note": "AI-generated pop artist signed for US$3M, songs generated by Suno",
           "date": "2025-09",
-          "last_checked": "2026-08-22",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-22",
-      "verified": "2026-08-22"
-    },
-    {
-      "id": "emily-howell",
-      "name": "Emily Howell",
-      "aliases": [],
-      "type": "project",
-      "labels": [],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://en.wikipedia.org/wiki/Emily_Howell",
-          "note": "AI composer system that emulates Bach style",
-          "date": "1997-01",
-          "last_checked": "2026-08-22",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-22",
-      "verified": "2026-08-22"
-    },
-    {
-      "id": "musiclm",
-      "name": "MusicLM",
-      "aliases": [],
-      "type": "project",
-      "labels": [],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://en.wikipedia.org/wiki/MusicLM",
-          "note": "Google text-to-music model, research prototype",
-          "date": "2023-01",
-          "last_checked": "2026-08-22",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-22",
-      "verified": "2026-08-22"
-    },
-    {
-      "id": "riffusion",
-      "name": "Riffusion",
-      "aliases": [],
-      "type": "project",
-      "labels": [],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://en.wikipedia.org/wiki/Riffusion",
-          "note": "Neural network generating music via spectrogram diffusion",
-          "date": "2022-12",
-          "last_checked": "2026-08-22",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-22",
-      "verified": "2026-08-22"
-    },
-    {
-      "id": "imoliver",
-      "name": "imoliver",
-      "aliases": [],
-      "type": "artist",
-      "labels": [],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://www.billboard.com/pro/ai-music-creator-imoliver-record-deal-hallwood/",
-          "note": "AI music designer signed to Hallwood, first traditional label signing of AI creator",
-          "date": "2025-07",
-          "last_checked": "2026-08-22",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-22",
-      "verified": "2026-08-22"
-    },
-    {
-      "id": "breaking-rust",
-      "name": "Breaking Rust",
-      "aliases": [],
-      "type": "artist",
-      "labels": [],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://en.wikipedia.org/wiki/Artificial_intelligence_in_music",
-          "note": "AI-generated song 'Walk My Walk' topped Billboard Country Digital Song Sales",
-          "date": "2025-11",
           "last_checked": "2026-08-22",
           "status": "valid"
         }
