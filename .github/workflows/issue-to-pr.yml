@@ -192,4 +192,8 @@ jobs:
             --base main \
             --head "add-artist/${ID}"
           
+          # Comment on issue with PR link
+          PR_URL=$(gh pr list --repo ${{ github.repository }} --head "add-artist/${ID}" --json url -q '.[0].url')
+          gh issue comment $ISSUE_NUMBER --body "✅ **PR created**: ${PR_URL}\n\nThe issue will be closed automatically when the PR is merged."
+          
           echo "=== PR created successfully ==="

@@ -210,29 +210,6 @@
       "verified": "2026-08-22"
     },
     {
-      "id": "new-artist",
-      "name": "New AI Artist",
-      "aliases": [
-        "_No response_"
-      ],
-      "type": "artist",
-      "labels": [
-        "_No response_"
-      ],
-      "ai_confidence": "high",
-      "evidence": [
-        {
-          "url": "https://holger-kampffmeyer.de",
-          "note": "Fake AI",
-          "date": "2028-08",
-          "last_checked": "2026-08-23",
-          "status": "valid"
-        }
-      ],
-      "added": "2026-08-23",
-      "verified": "2026-08-23"
-    },
-    {
       "id": "riffusion",
       "name": "Riffusion",
       "aliases": [],
