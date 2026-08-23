@@ -1,0 +1,184 @@
+name: Issue to PR
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  create-pr:
+    if: github.event.label.name == 'Accept'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse issue and create PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          set -e
+          
+          echo "=== Parsing Issue #${ISSUE_NUMBER} ==="
+          
+          # Parse Issue body fields
+          # Issue forms use ### headers for field labels
+          ID=$(echo "$ISSUE_BODY" | sed -n '/^### ID$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | tr -d '[:space:]')
+          NAME=$(echo "$ISSUE_BODY" | sed -n '/^### Name$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
+          ALIASES=$(echo "$ISSUE_BODY" | sed -n '/^### Aliases$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
+          TYPE=$(echo "$ISSUE_BODY" | sed -n '/^### Type$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
+          LABELS=$(echo "$ISSUE_BODY" | sed -n '/^### Labels$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
+          AI_CONFIDENCE=$(echo "$ISSUE_BODY" | sed -n '/^### AI Confidence$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
+          EVIDENCE=$(echo "$ISSUE_BODY" | sed -n '/^### Evidence$/,/^$/p' | sed '1d' | sed '/^$/d')
+          
+          echo "ID: $ID"
+          echo "Name: $NAME"
+          echo "Type: $TYPE"
+          echo "AI Confidence: $AI_CONFIDENCE"
+          
+          # Validate required fields
+          if [ -z "$ID" ] || [ -z "$NAME" ] || [ -z "$TYPE" ] || [ -z "$AI_CONFIDENCE" ]; then
+            echo "ERROR: Missing required fields"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: Missing required fields. Please ensure ID, Name, Type, and AI Confidence are filled in."
+            exit 1
+          fi
+          
+          # Validate ID format (kebab-case)
+          if ! [[ "$ID" =~ ^[a-z0-9-]+$ ]]; then
+            echo "ERROR: Invalid ID format"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: ID must be kebab-case (lowercase letters, numbers, hyphens only). Got: \`$ID\`"
+            exit 1
+          fi
+          
+          # Validate type
+          if [[ "$TYPE" != "artist" && "$TYPE" != "project" && "$TYPE" != "collective" ]]; then
+            echo "ERROR: Invalid type"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: Type must be 'artist', 'project', or 'collective'. Got: \`$TYPE\`"
+            exit 1
+          fi
+          
+          # Validate AI confidence
+          if [[ "$AI_CONFIDENCE" != "high" && "$AI_CONFIDENCE" != "medium" && "$AI_CONFIDENCE" != "low" ]]; then
+            echo "ERROR: Invalid AI confidence"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: AI Confidence must be 'high', 'medium', or 'low'. Got: \`$AI_CONFIDENCE\`"
+            exit 1
+          fi
+          
+          # Validate evidence
+          if [ -z "$EVIDENCE" ]; then
+            echo "ERROR: Missing evidence"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: At least one evidence entry is required."
+            exit 1
+          fi
+          
+          # Check for duplicate ID
+          if jq -e ".entries[] | select(.id == \"$ID\")" known_ai_artists.json > /dev/null 2>&1; then
+            echo "ERROR: Duplicate ID"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: ID \`$ID\` already exists in the database."
+            exit 1
+          fi
+          
+          # Check if branch already exists
+          if git ls-remote --heads origin "add-artist/$ID" | grep -q "add-artist/$ID"; then
+            echo "ERROR: Branch already exists"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Error**: Branch \`add-artist/$ID\` already exists. Please wait for the existing PR to be merged or closed."
+            exit 1
+          fi
+          
+          # Parse aliases (comma-separated to array)
+          ALIASES_JSON="[]"
+          if [ -n "$ALIASES" ]; then
+            ALIASES_JSON=$(echo "$ALIASES" | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | jq -R . | jq -s .)
+          fi
+          
+          # Parse labels (comma-separated to array)
+          LABELS_JSON="[]"
+          if [ -n "$LABELS" ]; then
+            LABELS_JSON=$(echo "$LABELS" | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | jq -R . | jq -s .)
+          fi
+          
+          # Parse evidence entries
+          TODAY=$(date +%Y-%m-%d)
+          EVIDENCE_JSON="[]"
+          while IFS= read -r line; do
+            if [ -n "$line" ]; then
+              URL=$(echo "$line" | cut -d'|' -f1 | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+              NOTE=$(echo "$line" | cut -d'|' -f2 | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+              DATE=$(echo "$line" | cut -d'|' -f3 | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
+              
+              EVIDENCE_JSON=$(echo "$EVIDENCE_JSON" | jq \
+                --arg url "$URL" \
+                --arg note "$NOTE" \
+                --arg date "$DATE" \
+                --arg checked "$TODAY" \
+                '. += [{"url": $url, "note": $note, "date": $date, "last_checked": $checked, "status": "valid"}]')
+            fi
+          done <<< "$EVIDENCE"
+          
+          # Create new entry
+          NEW_ENTRY=$(jq -n \
+            --arg id "$ID" \
+            --arg name "$NAME" \
+            --argjson aliases "$ALIASES_JSON" \
+            --arg type "$TYPE" \
+            --argjson labels "$LABELS_JSON" \
+            --arg ai_confidence "$AI_CONFIDENCE" \
+            --argjson evidence "$EVIDENCE_JSON" \
+            --arg added "$TODAY" \
+            --arg verified "$TODAY" \
+            '{
+              id: $id,
+              name: $name,
+              aliases: $aliases,
+              type: $type,
+              labels: $labels,
+              ai_confidence: $ai_confidence,
+              evidence: $evidence,
+              added: $added,
+              verified: $verified
+            }')
+          
+          # Create branch
+          git checkout -b "add-artist/$ID"
+          
+          # Insert entry alphabetically and update 'updated' field
+          jq --argjson entry "$NEW_ENTRY" \
+             --arg updated "$TODAY" \
+             '.updated = $updated | .entries = (.entries + [$entry] | sort_by(.id))' \
+             known_ai_artists.json > known_ai_artists.json.tmp
+          
+          mv known_ai_artists.json.tmp known_ai_artists.json
+          
+          # Commit and push
+          git add known_ai_artists.json
+          git commit -m "Add artist: $NAME ($ID)"
+          git push origin "add-artist/$ID"
+          
+          # Create PR body
+          {
+            echo "## New AI Artist Entry"
+            echo ""
+            echo "**ID**: \`${ID}\`"
+            echo "**Name**: ${NAME}"
+            echo "**Type**: ${TYPE}"
+            echo "**AI Confidence**: ${AI_CONFIDENCE}"
+            echo ""
+            echo "### Evidence"
+            echo "${EVIDENCE}"
+            echo ""
+            echo "---"
+            echo "Closes #${ISSUE_NUMBER}"
+          } > /tmp/pr_body.md
+          
+          gh pr create \
+            --title "Add artist: $NAME ($ID)" \
+            --body-file /tmp/pr_body.md \
+            --base main \
+            --head "add-artist/${ID}"
+          
+          echo "=== PR created successfully ==="

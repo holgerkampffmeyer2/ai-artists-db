@@ -45,11 +45,22 @@ Curated, community-maintained database of artists/projects known to produce AI-g
 
 ## Contributing
 
+### Option 1: Issue-based (Recommended)
+
+1. Click **New Issue** → Select **"Add AI Artist Entry"**
+2. Fill in all required fields (ID, Name, Type, AI Confidence, Evidence)
+3. Submit Issue
+4. Maintainer reviews and sets **Accept** label
+5. GitHub Action automatically creates PR with your entry
+6. Maintainer merges after validation passes
+
+### Option 2: Fork and PR
+
 1. Fork this repo
 2. Add entry to `known_ai_artists.json` (keep alphabetical by `id`)
 3. Ensure at least **one evidence URL** with note and date
 4. Run validation locally: `python -m jsonschema -i known_ai_artists.json schema.json`
-4. Submit PR
+5. Submit PR
 
 ### PR Requirements
 
