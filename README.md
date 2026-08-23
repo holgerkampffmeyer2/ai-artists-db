@@ -49,7 +49,7 @@ Curated, community-maintained database of artists/projects known to produce AI-g
 
 The easiest way to contribute is via GitHub Issues. Our automated workflow handles the rest:
 
-1. Click **New Issue** → Select **"Add AI Artist Entry"**
+1. **[Create new Issue](https://github.com/holgerkampffmeyer2/ai-artists-db/issues/new?template=add-artist.yml)** → Fill in artist details
 2. Fill in all required fields:
    - **ID**: Unique kebab-case identifier (e.g., `my-artist`)
    - **Name**: Primary artist/project name
