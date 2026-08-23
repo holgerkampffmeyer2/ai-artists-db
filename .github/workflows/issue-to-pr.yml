@@ -108,16 +108,16 @@ jobs:
             exit 1
           fi
           
-          # Parse aliases (comma-separated to array)
+          # Parse aliases (comma-separated to array, filter empty values)
           ALIASES_JSON="[]"
-          if [ -n "$ALIASES" ]; then
-            ALIASES_JSON=$(echo "$ALIASES" | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | jq -R . | jq -s .)
+          if [ -n "$ALIASES" ] && [ "$ALIASES" != "_No response_" ]; then
+            ALIASES_JSON=$(echo "$ALIASES" | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v "^$" | grep -v "_No response_" | jq -R . | jq -s .)
           fi
           
-          # Parse labels (comma-separated to array)
+          # Parse labels (comma-separated to array, filter empty values)
           LABELS_JSON="[]"
-          if [ -n "$LABELS" ]; then
-            LABELS_JSON=$(echo "$LABELS" | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | jq -R . | jq -s .)
+          if [ -n "$LABELS" ] && [ "$LABELS" != "_No response_" ]; then
+            LABELS_JSON=$(echo "$LABELS" | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | grep -v "^$" | grep -v "_No response_" | jq -R . | jq -s .)
           fi
           
           # Create evidence JSON from separate fields
