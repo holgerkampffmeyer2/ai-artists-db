@@ -165,6 +165,8 @@ jobs:
           
           # Commit and push
           git add known_ai_artists.json
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git commit -m "Add artist: $NAME ($ID)"
           git push origin "add-artist/$ID"
           
