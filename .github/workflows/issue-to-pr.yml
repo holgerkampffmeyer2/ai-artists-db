@@ -34,17 +34,20 @@ jobs:
           TYPE=$(echo "$ISSUE_BODY" | sed -n '/^### Type$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
           LABELS=$(echo "$ISSUE_BODY" | sed -n '/^### Labels$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
           AI_CONFIDENCE=$(echo "$ISSUE_BODY" | sed -n '/^### AI Confidence$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
-          EVIDENCE=$(echo "$ISSUE_BODY" | sed -n '/^### Evidence$/,/^$/p' | sed '1d' | sed '/^$/d')
+          EVIDENCE_URL=$(echo "$ISSUE_BODY" | sed -n '/^### Evidence URL$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
+          EVIDENCE_NOTE=$(echo "$ISSUE_BODY" | sed -n '/^### Evidence Note$/,/^### /p' | sed '1d;$d' | sed '/^$/d')
+          EVIDENCE_DATE=$(echo "$ISSUE_BODY" | sed -n '/^### Evidence Date$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
           
           echo "ID: $ID"
           echo "Name: $NAME"
           echo "Type: $TYPE"
           echo "AI Confidence: $AI_CONFIDENCE"
+          echo "Evidence URL: $EVIDENCE_URL"
           
           # Validate required fields
-          if [ -z "$ID" ] || [ -z "$NAME" ] || [ -z "$TYPE" ] || [ -z "$AI_CONFIDENCE" ]; then
+          if [ -z "$ID" ] || [ -z "$NAME" ] || [ -z "$TYPE" ] || [ -z "$AI_CONFIDENCE" ] || [ -z "$EVIDENCE_URL" ] || [ -z "$EVIDENCE_NOTE" ] || [ -z "$EVIDENCE_DATE" ]; then
             echo "ERROR: Missing required fields"
-            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: Missing required fields. Please ensure ID, Name, Type, and AI Confidence are filled in."
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: Missing required fields. Please ensure all fields are filled in."
             exit 1
           fi
           
@@ -69,10 +72,17 @@ jobs:
             exit 1
           fi
           
-          # Validate evidence
-          if [ -z "$EVIDENCE" ]; then
-            echo "ERROR: Missing evidence"
-            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: At least one evidence entry is required."
+          # Validate evidence URL
+          if ! [[ "$EVIDENCE_URL" =~ ^https?:// ]]; then
+            echo "ERROR: Invalid evidence URL format"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: Evidence URL must start with http:// or https://. Got: \`$EVIDENCE_URL\`"
+            exit 1
+          fi
+          
+          # Validate evidence date format (YYYY-MM)
+          if ! [[ "$EVIDENCE_DATE" =~ ^[0-9]{4}-[0-9]{2}$ ]]; then
+            echo "ERROR: Invalid evidence date format"
+            gh issue comment $ISSUE_NUMBER --body "❌ **Validation Error**: Evidence date must be in YYYY-MM format. Got: \`$EVIDENCE_DATE\`"
             exit 1
           fi
           
@@ -102,23 +112,14 @@ jobs:
             LABELS_JSON=$(echo "$LABELS" | tr ',' '\n' | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//' | jq -R . | jq -s .)
           fi
           
-          # Parse evidence entries
+          # Create evidence JSON from separate fields
           TODAY=$(date +%Y-%m-%d)
-          EVIDENCE_JSON="[]"
-          while IFS= read -r line; do
-            if [ -n "$line" ]; then
-              URL=$(echo "$line" | cut -d'|' -f1 | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
-              NOTE=$(echo "$line" | cut -d'|' -f2 | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
-              DATE=$(echo "$line" | cut -d'|' -f3 | sed 's/^[[:space:]]*//' | sed 's/[[:space:]]*$//')
-              
-              EVIDENCE_JSON=$(echo "$EVIDENCE_JSON" | jq \
-                --arg url "$URL" \
-                --arg note "$NOTE" \
-                --arg date "$DATE" \
-                --arg checked "$TODAY" \
-                '. += [{"url": $url, "note": $note, "date": $date, "last_checked": $checked, "status": "valid"}]')
-            fi
-          done <<< "$EVIDENCE"
+          EVIDENCE_JSON=$(jq -n \
+            --arg url "$EVIDENCE_URL" \
+            --arg note "$EVIDENCE_NOTE" \
+            --arg date "$EVIDENCE_DATE" \
+            --arg checked "$TODAY" \
+            '[{"url": $url, "note": $note, "date": $date, "last_checked": $checked, "status": "valid"}]')
           
           # Create new entry
           NEW_ENTRY=$(jq -n \
