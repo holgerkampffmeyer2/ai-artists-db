@@ -4,6 +4,25 @@
   "license": "CC0-1.0",
   "entries": [
     {
+      "id": "ai-artist2",
+      "name": "AI Artist",
+      "aliases": [],
+      "type": "artist",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://holger-kampffmeyer.de",
+          "note": "asdfasdf",
+          "date": "2026-08",
+          "last_checked": "2026-08-23",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-23",
+      "verified": "2026-08-23"
+    },
+    {
       "id": "aiva",
       "name": "AIVA",
       "aliases": [
