@@ -28,10 +28,10 @@ jobs:
           
           # Parse Issue body fields
           # Issue forms use ### headers for field labels
-          # Helper: extract content between header and next header
+          # Helper: extract content between header and next header (or end of body)
           extract_field() {
             local header="$1"
-            echo "$ISSUE_BODY" | sed -n "/^### ${header}$/,/^### /p" | sed '1d;$d' | sed '/^$/d' | head -1
+            echo "$ISSUE_BODY" | sed -n "/^### ${header}$/,/^### \|$/p" | sed '1d;$d' | sed '/^$/d' | head -1
           }
           
           ID=$(extract_field "ID" | tr -d '[:space:]')
