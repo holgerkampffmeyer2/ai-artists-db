@@ -31,7 +31,7 @@ jobs:
           # Helper: extract content between header and next header (or end of body)
           extract_field() {
             local header="$1"
-            echo "$ISSUE_BODY" | sed -n "/^### ${header}$/,/^### \|$/p" | sed '1d;$d' | sed '/^$/d' | head -1
+            echo "$ISSUE_BODY" | awk "/^### ${header}$/ { found=1; next } found && /^### / { exit } found && /^[^#]/ { print; exit } found { next }" | head -1
           }
           
           ID=$(extract_field "ID" | tr -d '[:space:]')
