@@ -288,6 +288,25 @@
       "verified": "2026-08-22"
     },
     {
+      "id": "test-ai-3",
+      "name": "Test AI Artist 3",
+      "aliases": [],
+      "type": "artist",
+      "labels": [],
+      "ai_confidence": "high",
+      "evidence": [
+        {
+          "url": "https://holger-kampffmeyer.de",
+          "note": "asdfasd",
+          "date": "2026-08",
+          "last_checked": "2026-08-23",
+          "status": "valid"
+        }
+      ],
+      "added": "2026-08-23",
+      "verified": "2026-08-23"
+    },
+    {
       "id": "the-velvet-sundown",
       "name": "The Velvet Sundown",
       "aliases": [],
