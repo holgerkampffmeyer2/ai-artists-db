@@ -47,14 +47,28 @@ Curated, community-maintained database of artists/projects known to produce AI-g
 
 ### Option 1: Issue-based (Recommended)
 
+The easiest way to contribute is via GitHub Issues. Our automated workflow handles the rest:
+
 1. Click **New Issue** → Select **"Add AI Artist Entry"**
-2. Fill in all required fields (ID, Name, Type, AI Confidence, Evidence)
+2. Fill in all required fields:
+   - **ID**: Unique kebab-case identifier (e.g., `my-artist`)
+   - **Name**: Primary artist/project name
+   - **Type**: artist, project, or collective
+   - **AI Confidence**: high, medium, or low
+   - **Evidence**: At least one entry with URL, note, and date (YYYY-MM)
 3. Submit Issue
 4. Maintainer reviews and sets **Accept** label
-5. GitHub Action automatically creates PR with your entry
-6. Maintainer merges after validation passes
+5. GitHub Action automatically:
+   - Validates all fields
+   - Checks for duplicate IDs
+   - Creates branch `add-artist/<id>`
+   - Inserts entry alphabetically
+   - Opens pull request
+6. Maintainer merges after CI validation passes
 
 ### Option 2: Fork and PR
+
+For contributors who prefer direct control:
 
 1. Fork this repo
 2. Add entry to `known_ai_artists.json` (keep alphabetical by `id`)
