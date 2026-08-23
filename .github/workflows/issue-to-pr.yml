@@ -28,21 +28,29 @@ jobs:
           
           # Parse Issue body fields
           # Issue forms use ### headers for field labels
-          ID=$(echo "$ISSUE_BODY" | sed -n '/^### ID$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | tr -d '[:space:]')
-          NAME=$(echo "$ISSUE_BODY" | sed -n '/^### Name$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
-          ALIASES=$(echo "$ISSUE_BODY" | sed -n '/^### Aliases$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
-          TYPE=$(echo "$ISSUE_BODY" | sed -n '/^### Type$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
-          LABELS=$(echo "$ISSUE_BODY" | sed -n '/^### Labels$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
-          AI_CONFIDENCE=$(echo "$ISSUE_BODY" | sed -n '/^### AI Confidence$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
-          EVIDENCE_URL=$(echo "$ISSUE_BODY" | sed -n '/^### Evidence URL$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
-          EVIDENCE_NOTE=$(echo "$ISSUE_BODY" | sed -n '/^### Evidence Note$/,/^### /p' | sed '1d;$d' | sed '/^$/d')
-          EVIDENCE_DATE=$(echo "$ISSUE_BODY" | sed -n '/^### Evidence Date$/,/^### /p' | sed '1d;$d' | sed '/^$/d' | head -1)
+          # Helper: extract content between header and next header
+          extract_field() {
+            local header="$1"
+            echo "$ISSUE_BODY" | sed -n "/^### ${header}$/,/^### /p" | sed '1d;$d' | sed '/^$/d' | head -1
+          }
+          
+          ID=$(extract_field "ID" | tr -d '[:space:]')
+          NAME=$(extract_field "Name")
+          ALIASES=$(extract_field "Aliases")
+          TYPE=$(extract_field "Type")
+          LABELS=$(extract_field "Labels")
+          AI_CONFIDENCE=$(extract_field "AI Confidence")
+          EVIDENCE_URL=$(extract_field "Evidence URL")
+          EVIDENCE_NOTE=$(extract_field "Evidence Note")
+          EVIDENCE_DATE=$(extract_field "Evidence Date")
           
           echo "ID: $ID"
           echo "Name: $NAME"
           echo "Type: $TYPE"
           echo "AI Confidence: $AI_CONFIDENCE"
           echo "Evidence URL: $EVIDENCE_URL"
+          echo "Evidence Note: $EVIDENCE_NOTE"
+          echo "Evidence Date: $EVIDENCE_DATE"
           
           # Validate required fields
           if [ -z "$ID" ] || [ -z "$NAME" ] || [ -z "$TYPE" ] || [ -z "$AI_CONFIDENCE" ] || [ -z "$EVIDENCE_URL" ] || [ -z "$EVIDENCE_NOTE" ] || [ -z "$EVIDENCE_DATE" ]; then
